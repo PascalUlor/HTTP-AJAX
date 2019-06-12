@@ -76,7 +76,7 @@ const SubmitBtn = styled.input`
 `;
 
 
-const Form =()=>{
+const Form =({ AddFriend })=>{
 const [newFriend, setNewFriend] = useState({
     name: '',
     age: '',
@@ -93,6 +93,16 @@ useEffect(() => {
       email: newFriend.email
     };
     console.log(friendDeets);
+    AddFriend(friendDeets);
+  };
+
+  const handleChange = e => {
+    e.persist();
+    const target = e.target;
+    const value = target.value;
+    const name = target.name;
+    setNewFriend(newFriend => ({ ...newFriend, [name]: value }));
+    console.log(newFriend);
   };
 
   return (
@@ -104,21 +114,21 @@ useEffect(() => {
         name="name"
         type="text"
         value={newFriend.name}
-        
+        onChange={handleChange}
       />
       <FormInput
         placeholder="age"
         name="age"
         type="text"
         value={newFriend.age}
-        
+        onChange={handleChange}
       />
       <FormInput
         placeholder="email"
         name="email"
         type="email"
         value={newFriend.email}
-        
+        onChange={handleChange}
       />
       <SubmitBtn type="submit" value="Log In" />
     </FormStyle>

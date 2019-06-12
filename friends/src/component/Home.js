@@ -3,7 +3,7 @@ import FriendsList from './FriendsList';
 import Form from './Form';
 
 
-const Home = ({ friendDb }) => {
+const Home = ({ friendDb, AddFriend }) => {
     console.table(friendDb);
     return (
         <div>
@@ -11,7 +11,7 @@ const Home = ({ friendDb }) => {
             console.log("+++++++++",friend)
             return <FriendsList key={friend.id} friend={friend}/>
         })}
-        <Form />
+        <Form AddFriend={AddFriend}/>
         </div>
     )
 }
