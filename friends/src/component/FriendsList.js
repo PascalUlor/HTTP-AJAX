@@ -21,11 +21,11 @@ a {
 `;
 
 const Text = styled.p`
-@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cinzel&display=swap');
   text-rendering: optimizeLegibility;
   text-rendering: optimizeSpeed;
   color: #000;
-  font-family: 'Lobster', cursive;
+  font-family: 'Cinzel', serif;
   font-size: 1.5rem;
   font-weight: bold;
 `;

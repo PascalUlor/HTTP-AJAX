@@ -36,7 +36,6 @@ const Home = ({ friendDb, AddFriend }) => {
         <Container>
         <FriendSection>
         {friendDb.map(friend=>{
-            console.log("+++++++++",friend)
             return <FriendsList key={friend.id} friend={friend}/>
         })}
         </FriendSection>
