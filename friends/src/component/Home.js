@@ -1,4 +1,6 @@
 import React from 'react';
+import FriendsList from './FriendsList';
+import Form from './Form';
 
 
 const Home = ({ friendDb }) => {
@@ -7,12 +9,9 @@ const Home = ({ friendDb }) => {
         <div>
         {friendDb.map(friend=>{
             console.log("+++++++++",friend)
-            return (
-                    <div key={friend.id}>
-                        {friend.name}
-                    </div>
-                    )
+            return <FriendsList key={friend.id} friend={friend}/>
         })}
+        <Form />
         </div>
     )
 }
