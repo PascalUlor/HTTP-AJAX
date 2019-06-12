@@ -83,10 +83,10 @@ const [newFriend, setNewFriend] = useState({
     email: ''
 });
 
-useEffect(() => {
-  }, [newFriend.name, newFriend.age, newFriend.email]);
+// useEffect(() => {
+//   }, [newFriend.name, newFriend.age, newFriend.email]);
 
-  const loginHandler = () => {
+  const postHandler = () => {
     let friendDeets = {
       name: newFriend.name,
       age: newFriend.age,
@@ -107,7 +107,7 @@ useEffect(() => {
 
   return (
     <Container>
-    <FormStyle onSubmit={e => loginHandler(e)}>
+    <FormStyle onSubmit={e => postHandler(e)}>
     <Header>Add Friend</Header>
       <FormInput
         placeholder="name"
