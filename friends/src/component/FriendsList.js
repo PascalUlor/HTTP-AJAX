@@ -9,15 +9,23 @@ display: flex;
 justify-content: center;
 align-items: center;
 width: 30rem;
-height: 5rem;
+height: 10rem;
 background-color: lightseagreen;
-margin: 0 auto;
+margin: 0 2rem;
 margin-top: 2rem;
 border-radius: 1rem;
 a {
     text-decoration: none;
-    /* color: rgba(191, 191, 191, 1); */
 }
+`;
+
+const Span = styled.div`
+display: flex;
+justify-content: flex-end;
+span {
+  font-weight: bold;
+  color: red;
+  }
 `;
 
 const Text = styled.p`
@@ -35,9 +43,11 @@ const FriendsList = ({ friend }) => {
     <Container>
       <Link to={`/${friend.id}`}>
         <div>
+        <Span>
+        <span>x</span>
+        </Span>
           <Text>
             {friend.name}
-            <span />
           </Text>
           <Text>{friend.age}</Text>
           <Text>{friend.email}</Text>
