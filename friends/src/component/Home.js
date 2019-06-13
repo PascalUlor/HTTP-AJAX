@@ -31,7 +31,6 @@ margin-top: 0;
 
 
 const Home = ({ friendDb, AddFriend }) => {
-    console.table(friendDb);
     return (
         <Container>
         <FriendSection>

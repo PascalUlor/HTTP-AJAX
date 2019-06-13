@@ -65,12 +65,13 @@ class App extends Component{
     this.setState({loader: true})
     axios.get(`${baseUrl}`)
     .then(res =>{
-      console.log("======",res);
       this.setState({
         friends: res.data
-      })
+      });
     })
-    .catch(err=> console.log("---------",err))
+    .catch(err=> {
+      console.log("---------",err);
+    this.setState({errorMessage: `Something went wrong. Ref: ${err}`})})
     .finally(()=> this.setState({loader: false}));
   }
 
@@ -86,11 +87,29 @@ class App extends Component{
           friends: res.data
         })
       })
-      .catch(err=> console.log(err));
+      .catch(err=> {
+        console.log("---------",err);
+      this.setState({errorMessage: `Something went wrong. Ref: ${err}`})});
+  }
+
+  UpdateFriendDeets(dataInput){
+    axios.put(`${baseUrl}/${dataInput.id}`, dataInput)
+    .then(res=>{
+      console.log(res);
+      this.setState({friends: res.data});
+    }).catch(err=> {
+      console.log("---------",err);
+    this.setState({errorMessage: `Something went wrong. Ref: ${err}`})})
   }
 
   componentDidMount() {
     this.FetchFriends();
+    this.UpdateFriendDeets({
+      id: 1,
+    name: 'Benjamin',
+    age: 300,
+    email: 'andela.com',
+    })
   }
 
   render() {
@@ -100,7 +119,7 @@ class App extends Component{
         AddFriend={this.AddFriends}
         />}
         {
-          this.state.spinner &&
+          this.state.loader &&
           <Loader><div></div><div></div><div></div></Loader>
         }
       </div>
