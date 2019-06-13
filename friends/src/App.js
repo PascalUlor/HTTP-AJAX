@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 import Home from './component/Home';
@@ -115,9 +116,15 @@ class App extends Component{
   render() {
     return (
       <div>
-        {this.state.friends && <Home friendDb = {this.state.friends}
+      <Route 
+        path='/'
+        render = {props => this.state.friends && <Home 
+        {...props}
+        friendDb = {this.state.friends}
         AddFriend={this.AddFriends}
         />}
+      />
+        
         {
           this.state.loader &&
           <Loader><div></div><div></div><div></div></Loader>
