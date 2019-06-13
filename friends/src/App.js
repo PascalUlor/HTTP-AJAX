@@ -59,7 +59,7 @@ class App extends Component{
   constructor() {
     super()
     this.state = {
-      friends: '',
+      friends: [],
       errorMessage: '',
       loader: false,
     }
@@ -75,7 +75,7 @@ class App extends Component{
     })
     .catch(err=> {
       console.log("---------",err);
-    this.setState({errorMessage: `Something went wrong. Ref: ${err}`})})
+    this.setState({errorMessage: `Something went wrong. Error: ${err}`})})
     .finally(()=> this.setState({loader: false}));
   }
 
@@ -93,7 +93,7 @@ class App extends Component{
       })
       .catch(err=> {
         console.log("---------",err);
-      this.setState({errorMessage: `Something went wrong. Ref: ${err}`})});
+      this.setState({errorMessage: `Something went wrong. Error: ${err}`})});
   }
 
   UpdateFriendDeets(dataInput){
@@ -102,11 +102,29 @@ class App extends Component{
       this.setState({friends: res.data});
     }).catch(err=> {
       console.log("---------",err);
-    this.setState({errorMessage: `Something went wrong. Ref: ${err}`})})
+    this.setState({errorMessage: `Something went wrong. Error: ${err}`})})
+  }
+
+  DeleteFriend(dataInput){
+    axios.delete(`${baseUrl}/${dataInput.id}`)
+    .then(res=>{
+      console.log("-----Working", res);
+      this.setState({friends: res.data})
+    }).catch(err=> {
+      console.log("---------",err);
+    // this.setState({errorMessage: `Something went wrong. Error: ${err}`})
+  });
   }
 
   componentDidMount() {
+    // const data = {
+    //   id: 1,
+    //   name: "Ben",
+    //   age: 30,
+    //   email: "ben@lambdaschool.com"
+    //   }
     this.FetchFriends();
+    // this.DeleteFriend(data);
   }
 
   render() {
@@ -120,6 +138,7 @@ class App extends Component{
         {...props}
         friendDb = {this.state.friends}
         AddFriend={this.AddFriends}
+        DeleteFriend={this.DeleteFriend}
         />}
       />
 
@@ -128,6 +147,7 @@ class App extends Component{
         render = {props => <Friend 
         {...props} UpdateFriend={this.UpdateFriendDeets}
         title='Update Friend'
+        DeleteFriend={this.DeleteFriend}
         />}
       />
       <Route 

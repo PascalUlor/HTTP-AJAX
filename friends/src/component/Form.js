@@ -83,6 +83,12 @@ const [friendInfo, setFriendInfo] = useState({
     email: ''
 });
 
+const [UpdateInfo, setUpdateInfo] = useState({
+  name: friend.name,
+  age: friend.age,
+  email: friend.email
+});
+
   const postHandler = () => {
     let friendDeets = {
       name: friendInfo.name,
@@ -95,9 +101,9 @@ const [friendInfo, setFriendInfo] = useState({
   const updateHandler = () => {
     let friendDeets = {
       id: friend.id,
-      name: friendInfo.name,
-      age: friendInfo.age,
-      email: friendInfo.email
+      name: friendInfo.name !== ''? friendInfo.name: friend.name,
+      age: friendInfo.age !== ''? friendInfo.age: friend.age,
+      email: friendInfo.email !== '' ? friendInfo.email: friend.email
     };
     console.log(friendDeets);
     UpdateFriend(friendDeets);
@@ -109,7 +115,6 @@ const [friendInfo, setFriendInfo] = useState({
     const value = target.value;
     const name = target.name;
     setFriendInfo(friendInfo => ({ ...friendInfo, [name]: value }));
-    // setUpdateInfo(friendInfo => ({ ...friendInfo, [name]: value }));
     console.log(friendInfo);
   };
 
@@ -147,21 +152,21 @@ const [friendInfo, setFriendInfo] = useState({
         placeholder="name"
         name="name"
         type="text"
-        value={friendInfo.name}
+        value={friendInfo.name === ''? friend.name:friendInfo.name }
         onChange={handleChange}
       />
       <FormInput
         placeholder="age"
         name="age"
         type="text"
-        value={friendInfo.age}
+        value={friendInfo.age === ''? friend.age:friendInfo.age }
         onChange={handleChange}
       />
       <FormInput
         placeholder="email"
         name="email"
         type="email"
-        value={friendInfo.email}
+        value={friendInfo.email === ''? friend.email:friendInfo.email }
         onChange={handleChange}
       />
       <SubmitBtn type="submit" value="Log In" />

@@ -32,12 +32,12 @@ margin-top: 0;
 `;
 
 
-const Home = ({ friendDb, AddFriend }) => {
+const Home = ({ friendDb, DeleteFriend }) => {
     return (
         <Container>
         <FriendSection>
         {friendDb.map(friend=>{
-            return <FriendsList key={friend.id} friend={friend}/>
+            return <FriendsList key={friend.id} friend={friend} DeleteFriend={DeleteFriend}/>
         })}
         </FriendSection>
         

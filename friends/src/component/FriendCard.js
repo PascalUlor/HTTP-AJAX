@@ -37,12 +37,17 @@ const Text = styled.p`
   font-weight: bold;
 `;
 
-const FriendCard = ({ friend }) => {
+const FriendCard = ({ friend, DeleteFriend }) => {
+    console.log('=======',friend)
+
+    const deleteHandler =()=>{
+        DeleteFriend(friend);
+    }
   return (
     <Container>
         <div>
         <Span>
-        <span>x</span>
+        <span><button onClick={deleteHandler}>Delete</button></span>
         </Span>
           <Text>
             {friend.name}

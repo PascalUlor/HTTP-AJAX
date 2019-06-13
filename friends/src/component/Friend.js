@@ -24,7 +24,6 @@ export default class Friend extends Component {
   FetchFriendById(id) {
     axios.get(`${baseUrl}/${id}`)
     .then(res =>{
-      // console.log(res.data)
       this.setState({
         friend: res.data
       });
@@ -42,7 +41,7 @@ export default class Friend extends Component {
 
   render() {
 
-    return this.state.friend && <div><FriendCard friend={this.state.friend}/>
+    return this.state.friend && <div><FriendCard friend={this.state.friend} DeleteFriend={this.props.DeleteFriend}/>
     <Form 
     UpdateFriend={this.props.UpdateFriend}
     title={this.props.title}
