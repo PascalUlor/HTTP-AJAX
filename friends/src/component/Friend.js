@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FriendCard from './FriendCard';
+import Form from './Form';
 
 const baseUrl = 'http://localhost:5000/friends';
 
 export default class Friend extends Component {
   constructor(props) {
+    console.log(props);
     super(props);
     this.state = {
       friend: null
@@ -22,8 +24,9 @@ export default class Friend extends Component {
   FetchFriendById(id) {
     axios.get(`${baseUrl}/${id}`)
     .then(res =>{
+      // console.log(res.data)
       this.setState({
-        friends: res.data
+        friend: res.data
       });
     })
     .catch(err=> {
@@ -38,14 +41,13 @@ export default class Friend extends Component {
   }
 
   render() {
-    if (!this.state.friend) {
-      return <div>Loading friends information...</div>;
-    }
 
-    return (
-      <div className="save-wrapper">
-        <FriendCard friend={this.state.friend}/>
-      </div>
-    );
+    return this.state.friend && <div><FriendCard friend={this.state.friend}/>
+    <Form 
+    UpdateFriend={this.props.UpdateFriend}
+    title={this.props.title}
+    friend={this.state.friend}
+    />
+    </div>;
   }
 }
