@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 import Home from './component/Home';
+import Friend from './component/Friend';
 
 const baseUrl = 'http://localhost:5000/friends';
 
@@ -96,7 +97,6 @@ class App extends Component{
   UpdateFriendDeets(dataInput){
     axios.put(`${baseUrl}/${dataInput.id}`, dataInput)
     .then(res=>{
-      console.log(res);
       this.setState({friends: res.data});
     }).catch(err=> {
       console.log("---------",err);
@@ -105,12 +105,6 @@ class App extends Component{
 
   componentDidMount() {
     this.FetchFriends();
-    this.UpdateFriendDeets({
-      id: 1,
-    name: 'Benjamin',
-    age: 300,
-    email: 'andela.com',
-    })
   }
 
   render() {
@@ -122,6 +116,14 @@ class App extends Component{
         {...props}
         friendDb = {this.state.friends}
         AddFriend={this.AddFriends}
+        />}
+      />
+
+      <Route 
+        exact
+        path='/:id'
+        render = {props => this.state.friends && <Friend 
+        {...props}
         />}
       />
         
