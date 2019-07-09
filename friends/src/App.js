@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 import Home from './component/Home';
+import Friend from './component/Friend';
+import Header from './component/Nav';
+import Form from './component/Form';
 
 const baseUrl = 'http://localhost:5000/friends';
 
@@ -55,7 +59,7 @@ class App extends Component{
   constructor() {
     super()
     this.state = {
-      friends: '',
+      friends: [],
       errorMessage: '',
       loader: false,
     }
@@ -65,12 +69,13 @@ class App extends Component{
     this.setState({loader: true})
     axios.get(`${baseUrl}`)
     .then(res =>{
-      console.log("======",res);
       this.setState({
         friends: res.data
-      })
+      });
     })
-    .catch(err=> console.log("---------",err))
+    .catch(err=> {
+      console.log("---------",err);
+    this.setState({errorMessage: `Something went wrong. Error: ${err}`})})
     .finally(()=> this.setState({loader: false}));
   }
 
@@ -86,21 +91,81 @@ class App extends Component{
           friends: res.data
         })
       })
-      .catch(err=> console.log(err));
+      .catch(err=> {
+        console.log("---------",err);
+      this.setState({errorMessage: `Something went wrong. Error: ${err}`})});
+  }
+
+  UpdateFriendDeets(dataInput){
+    axios.put(`${baseUrl}/${dataInput.id}`, dataInput)
+    .then(res=>{
+      this.setState({friends: res.data});
+    }).catch(err=> {
+      console.log("---------",err);
+    this.setState({errorMessage: `Something went wrong. Error: ${err}`})})
+  }
+
+  DeleteFriend(dataInput){
+    axios.delete(`${baseUrl}/${dataInput.id}`)
+    .then(res=>{
+      console.log("-----Working", res);
+      this.setState({friends: res.data})
+    }).catch(err=> {
+      console.log("---------",err);
+    // this.setState({errorMessage: `Something went wrong. Error: ${err}`})
+  });
   }
 
   componentDidMount() {
+    // const data = {
+    //   id: 1,
+    //   name: "Ben",
+    //   age: 30,
+    //   email: "ben@lambdaschool.com"
+    //   }
     this.FetchFriends();
+    // this.DeleteFriend(data);
   }
 
   render() {
     return (
       <div>
-        {this.state.friends && <Home friendDb = {this.state.friends}
+      <Header />
+      <Route 
+      exact
+        path='/'
+        render = {props => this.state.friends && <Home 
+        {...props}
+        friendDb = {this.state.friends}
         AddFriend={this.AddFriends}
+        DeleteFriend={this.DeleteFriend}
         />}
+      />
+
+      <Route 
+        path='/:id'
+        render = {props => <Friend 
+        {...props} UpdateFriend={this.UpdateFriendDeets}
+        title='Update Friend'
+        DeleteFriend={this.DeleteFriend}
+        />}
+      />
+      <Route 
+        path='/addfriend'
+        render = {props => <Form 
+          AddFriend={this.AddFriends} title='Add Friend'
+        />}
+      />
+
+    {/* <Route 
+        path='/update'
+        render = {props => <Form 
+          UpdateFriend={this.UpdateFriendDeets} title='Update Friend'
+        />}
+      /> */}
+        
         {
-          this.state.spinner &&
+          this.state.loader &&
           <Loader><div></div><div></div><div></div></Loader>
         }
       </div>

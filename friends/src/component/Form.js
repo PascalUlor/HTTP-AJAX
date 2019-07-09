@@ -76,24 +76,37 @@ const SubmitBtn = styled.input`
 `;
 
 
-const Form =({ AddFriend })=>{
-const [newFriend, setNewFriend] = useState({
+const Form =({ AddFriend, UpdateFriend, title, friend })=>{
+const [friendInfo, setFriendInfo] = useState({
     name: '',
     age: '',
     email: ''
 });
 
-// useEffect(() => {
-//   }, [newFriend.name, newFriend.age, newFriend.email]);
+const [UpdateInfo, setUpdateInfo] = useState({
+  name: friend.name,
+  age: friend.age,
+  email: friend.email
+});
 
   const postHandler = () => {
     let friendDeets = {
-      name: newFriend.name,
-      age: newFriend.age,
-      email: newFriend.email
+      name: friendInfo.name,
+      age: friendInfo.age,
+      email: friendInfo.email
     };
     console.log(friendDeets);
-    AddFriend(friendDeets);
+  };
+
+  const updateHandler = () => {
+    let friendDeets = {
+      id: friend.id,
+      name: friendInfo.name !== ''? friendInfo.name: friend.name,
+      age: friendInfo.age !== ''? friendInfo.age: friend.age,
+      email: friendInfo.email !== '' ? friendInfo.email: friend.email
+    };
+    console.log(friendDeets);
+    UpdateFriend(friendDeets);
   };
 
   const handleChange = e => {
@@ -101,37 +114,63 @@ const [newFriend, setNewFriend] = useState({
     const target = e.target;
     const value = target.value;
     const name = target.name;
-    setNewFriend(newFriend => ({ ...newFriend, [name]: value }));
-    console.log(newFriend);
+    setFriendInfo(friendInfo => ({ ...friendInfo, [name]: value }));
+    console.log(friendInfo);
   };
 
   return (
     <Container>
-    <FormStyle onSubmit={e => postHandler(e)}>
-    <Header>Add Friend</Header>
+    { AddFriend && <FormStyle onSubmit={e => postHandler(e)}>
+    <Header>{title}</Header>
       <FormInput
         placeholder="name"
         name="name"
         type="text"
-        value={newFriend.name}
+        value={friendInfo.name}
         onChange={handleChange}
       />
       <FormInput
         placeholder="age"
         name="age"
         type="text"
-        value={newFriend.age}
+        value={friendInfo.age}
         onChange={handleChange}
       />
       <FormInput
         placeholder="email"
         name="email"
         type="email"
-        value={newFriend.email}
+        value={friendInfo.email}
         onChange={handleChange}
       />
       <SubmitBtn type="submit" value="Log In" />
-    </FormStyle>
+    </FormStyle>}
+
+    { friend && <FormStyle onSubmit={e => updateHandler(e)}>
+    <Header>{title}</Header>
+      <FormInput
+        placeholder="name"
+        name="name"
+        type="text"
+        value={friendInfo.name === ''? friend.name:friendInfo.name }
+        onChange={handleChange}
+      />
+      <FormInput
+        placeholder="age"
+        name="age"
+        type="text"
+        value={friendInfo.age === ''? friend.age:friendInfo.age }
+        onChange={handleChange}
+      />
+      <FormInput
+        placeholder="email"
+        name="email"
+        type="email"
+        value={friendInfo.email === ''? friend.email:friendInfo.email }
+        onChange={handleChange}
+      />
+      <SubmitBtn type="submit" value="Log In" />
+    </FormStyle>}
     </Container>
   );
 }

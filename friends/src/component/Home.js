@@ -1,7 +1,8 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
 import styled from "styled-components";
 import FriendsList from './FriendsList';
-import Form from './Form';
+// import Form from './Form';
 
 
 
@@ -18,6 +19,7 @@ margin: 0 auto;
 margin-top: 0;
 `;
 
+
 const FriendSection = styled.div`
 display: flex;
 justify-content: center;
@@ -30,17 +32,16 @@ margin-top: 0;
 `;
 
 
-const Home = ({ friendDb, AddFriend }) => {
-    console.table(friendDb);
+const Home = ({ friendDb, DeleteFriend }) => {
     return (
         <Container>
         <FriendSection>
         {friendDb.map(friend=>{
-            return <FriendsList key={friend.id} friend={friend}/>
+            return <FriendsList key={friend.id} friend={friend} DeleteFriend={DeleteFriend}/>
         })}
         </FriendSection>
         
-        <Form AddFriend={AddFriend}/>
+        {/* <Form AddFriend={AddFriend} /> */}
         </Container>
     )
 }
